@@ -3,7 +3,7 @@
 FROM node:16 AS base
 
 # Set working directory for backend
-WORKDIR /backend
+WORKDIR /app
 
 # Copy backend files
 COPY doener-website/backend/ ./backend/
