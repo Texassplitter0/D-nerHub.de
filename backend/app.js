@@ -45,5 +45,3 @@ app.get('/protected', (req, res) => {
 // Server starten
 const PORT = process.env.PORT || 10100;
 app.listen(PORT, () => console.log(`Server läuft auf Port ${PORT}`));
-
-module.exports = app;
