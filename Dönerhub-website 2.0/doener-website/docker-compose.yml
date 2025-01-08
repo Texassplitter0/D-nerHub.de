@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443" # Hinzufügen des HTTPS-Ports
+    volumes:
+      - ./frontend:/usr/share/nginx/html/frontend
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      
+  frontend:
+    build: ./frontend
+    ports:
+      - "10101:80"  # Frontend läuft auf Port 10101
+
+  backend:
+    build: ./backend
+    ports:
+      - "10100:3000"  # Backend läuft auf Port 10100
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=doenerhub
+      - JWT_SECRET=dein_geheimnis_hier
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      - db
+
+  db:
+    build: ./db
+    ports:
+      - "10102:3306"  # DB läuft auf Port 10102
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: doenerhub
