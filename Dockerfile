@@ -6,7 +6,7 @@ FROM node:16 AS base
 WORKDIR /app
 
 # Copy backend files
-COPY doener-website/backend/ ./backend/
+COPY app/backend/ ./backend/
 
 # Install backend dependencies
 WORKDIR /app/backend
@@ -16,13 +16,13 @@ RUN npm install
 WORKDIR /app/frontend
 
 # Copy frontend files
-COPY doener-website/frontend/ ./
+COPY app/frontend/ ./
 
 # Set working directory for database initialization
 WORKDIR /app/db
 
 # Copy database files
-COPY doener-website/db/ ./
+COPY app/db/ ./
 
 # Expose ports for backend and database
 EXPOSE 3000 3306
