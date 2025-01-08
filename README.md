@@ -7,15 +7,13 @@ Die DönerHub Website ist eine vollständige Webanwendung, die Funktionen wie Be
 Die Verzeichnisstruktur sieht wie folgt aus:
 
 ```
-DönerHub.de/
-  └── Dönerhub-website 2.0/
+    Dönerhub-website 2.0/
       ├── docker-compose.yml
       ├── Dockerfile
-      ├── doener-website/
-          ├── backend/
-          ├── db/
-          ├── frontend/
-          └── nginx.conf
+      ├── backend/
+      ├── db/
+      ├── frontend/
+      └── nginx.conf
 ```
 
 ### Hauptkomponenten
