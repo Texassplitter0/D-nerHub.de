@@ -1,4 +1,5 @@
 const express = require('express');
+const app = require('./app');
 const cors = require('cors');
 
 // CORS-Konfiguration
@@ -9,7 +10,6 @@ app.use(cors({
 }));
 
 // Restlicher Backend-Code
-const app = require('./app'); // Import der App-Logik aus app.js
 
 const PORT = process.env.PORT || 10100;
 
