@@ -8,7 +8,7 @@ WORKDIR /app
 COPY backend/ ./backend/
 
 # Install backend dependencies
-WORKDIR /app/backend
+WORKDIR /app
 RUN npm install
 
 # Set working directory for frontend
