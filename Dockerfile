@@ -27,7 +27,7 @@ COPY db/ ./
 EXPOSE 3000 3306
 
 # Set default working directory
-WORKDIR /app/backend
+WORKDIR /app
 
 # Start backend and database services
 CMD ["node", "server.js"]
