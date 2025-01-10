@@ -1,6 +1,7 @@
 const express = require('express');
 const app = require('./app');
 const cors = require('cors');
+var app = express();
 
 // CORS-Konfiguration
 app.use(cors({
