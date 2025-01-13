@@ -1,16 +1,19 @@
 const express = require('express');
 const app = require('./app');
-const cors = require('cors');
 
-// CORS-Konfiguration
-app.use(cors({
-    origin: 'http://localhost', // Erlaubt Frontend auf localhost
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Cookies/Headers erlauben
-}));
+// Manuelle CORS-Konfiguration
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'http://localhost'); // Erlaubt Frontend auf localhost
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Cookies/Headers erlauben
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+    }
+    next();
+});
 
 // Restlicher Backend-Code
-
 const PORT = process.env.PORT || 10100;
 
 // Server starten
