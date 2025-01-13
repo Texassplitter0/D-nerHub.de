@@ -3,7 +3,7 @@ services:
     build:
       context: .
     ports:
-      - "3000:3000"
+      - "10100:10100"
     volumes:
       - ./backend:/app/backend
       - ./app/backend/node_modules:/app/backend/node_modules
