@@ -1,6 +1,7 @@
 services:
   app:
-    build: .
+    build:
+      context: .
     ports:
       - "3000:3000"
     volumes:
