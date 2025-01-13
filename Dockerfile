@@ -14,7 +14,7 @@ RUN npm install
 COPY backend/ ./
 
 # Exponiere Port 3000
-EXPOSE 3000
+EXPOSE 10100
 
 # Verhindere das Überschreiben von node_modules durch Volumes
 VOLUME [ "/app/backend/node_modules" ]
