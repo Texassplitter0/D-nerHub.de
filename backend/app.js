@@ -1,45 +1,46 @@
-
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const userRoutes = require('./routes/userRoutes'); // Benutzerbezogene Routen importieren
-const db = require('./utils/db'); // Datenbankverbindung
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken'); // JWT muss importiert werden
+const userRoutes = require('./routes/userRoutes');
+
+dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors({
-    origin: 'http://localhost:3000', // Erlaubt Anfragen von der Frontend-Domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// Body parser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// Test der Datenbankverbindung
-db.getConnection()
-    .then(() => console.log('Datenbank erfolgreich verbunden'))
-    .catch((err) => console.error('Fehler bei der Datenbankverbindung:', err));
+// Manual CORS middleware
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    console.log('Preflight OPTIONS request received');
+    return res.sendStatus(204);
+  }
+  next(); // Dieser Aufruf muss außerhalb des if-Blocks sein
+});
 
-// Routen
-app.use('/api/users', userRoutes); // Benutzerbezogene Routen hinzufügen
+// Routes
+app.use('/api/users', userRoutes);
 
 // Beispiel für einen geschützten Endpunkt
 app.get('/protected', (req, res) => {
-    const token = req.headers['authorization']?.split(' ')[1];
+  const token = req.headers['authorization']?.split(' ')[1];
 
-    if (!token) {
-        return res.status(401).json({ error: 'Token erforderlich' });
+  if (!token) {
+    return res.status(401).json({ error: 'Token erforderlich' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ error: 'Ungültiges Token' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(403).json({ error: 'Ungültiges Token' });
-        }
-
-        res.json({ message: 'Zugriff auf geschützten Endpunkt', user: decoded });
-    });
+    res.json({ message: 'Zugriff auf geschützten Endpunkt', user: decoded });
+  });
 });
 
 // Server starten
