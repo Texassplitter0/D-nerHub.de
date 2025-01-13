@@ -5,28 +5,16 @@ FROM node:16 AS base
 WORKDIR /app/backend
 
 # Kopiere die Backend-Dateien
-COPY backend/ ./
+COPY backend/package*.json ./
 
 # Installiere die Backend-Abhängigkeiten
 RUN npm install
 
-# Setze das Arbeitsverzeichnis für das Frontend
-WORKDIR /app/frontend
+# Kopiere den restlichen Backend-Code
+COPY backend/ ./
 
-# Kopiere die Frontend-Dateien
-COPY frontend/ ./
-
-# Setze das Arbeitsverzeichnis für die Datenbankinitialisierung
-WORKDIR /app/db
-
-# Kopiere die Datenbankdateien
-COPY db/ ./
-
-# Exponiere die Ports für das Backend und die Datenbank
-EXPOSE 3000 3306
-
-# Setze das Arbeitsverzeichnis zurück auf das Backend
-WORKDIR /app/backend
+# Exponiere die Ports für das Backend
+EXPOSE 3000
 
 # Starte den Backend-Server
 CMD ["node", "server.js"]
