@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
 app.use('/api/users', router);
 
 // Server starten
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10100;
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);
 });
