@@ -1,6 +1,9 @@
 # Verwende Node.js als Basis-Image
 FROM node:16 AS base
 
+# Install build tools
+RUN apt-get update && apt-get install -y build-essential
+
 # Setze das Arbeitsverzeichnis für das Backend
 WORKDIR /app/backend
 
@@ -9,6 +12,7 @@ COPY backend/ ./backend/
 
 # Install backend dependencies
 WORKDIR /app
+COPY backend/package.json ./
 RUN npm install
 
 # Kopiere den restlichen Backend-Code
