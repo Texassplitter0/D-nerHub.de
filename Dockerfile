@@ -4,14 +4,27 @@ FROM node:16 AS base
 # Setze das Arbeitsverzeichnis für das Backend
 WORKDIR /app/backend
 
-# Kopiere nur die package.json und package-lock.json Dateien
-COPY backend/package*.json ./
+# Copy backend files
+COPY backend/ ./backend/
 
-# Installiere die Backend-Abhängigkeiten
-RUN npm install --production
+# Install backend dependencies
+WORKDIR /app
+RUN npm install
 
 # Kopiere den restlichen Backend-Code
 COPY backend/ ./
+
+# Set working directory for frontend
+WORKDIR /app/frontend
+
+# Copy frontend files
+COPY frontend/ ./
+
+# Set working directory for database initialization
+WORKDIR /app/db
+
+# Copy database files
+COPY db/ ./
 
 # Exponiere den Port für den Backend-Server
 EXPOSE 10100
