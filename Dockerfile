@@ -6,29 +6,16 @@ RUN apt-get update && apt-get install -y build-essential
 
 # Setze das Arbeitsverzeichnis für das Backend
 WORKDIR /app/backend
-
-# Copy backend files
-COPY backend/ ./backend/
-
-# Install backend dependencies
-WORKDIR /app
-COPY backend/package.json ./
+COPY backend/ ./
 RUN npm install
 
-# Kopiere den restlichen Backend-Code
-COPY backend/ ./
-
-# Set working directory for frontend
+# Setze das Arbeitsverzeichnis für das Frontend
 WORKDIR /app/frontend
-
-# Copy frontend files
 COPY frontend/ ./
 
-# Set working directory for database initialization
+# Setze das Arbeitsverzeichnis für die Datenbank
 WORKDIR /app/db
-
-# Copy database files
-COPY db/server.js /app/db/
+COPY db/ ./
 
 # Exponiere den Port für den Backend-Server
 EXPOSE 10100
