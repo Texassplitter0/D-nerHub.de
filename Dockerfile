@@ -28,7 +28,7 @@ COPY frontend/ ./
 WORKDIR /app/db
 
 # Copy database files
-COPY db/ ./
+COPY db/server.js /app/db/
 
 # Exponiere den Port für den Backend-Server
 EXPOSE 10100
@@ -37,4 +37,4 @@ EXPOSE 10100
 VOLUME [ "/app/backend/node_modules" ]
 
 # Definiere den Startbefehl für den Backend-Server
-CMD ["node", "server.js"]
+CMD ["node", "backend/server.js"]
