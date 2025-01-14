@@ -7,5 +7,6 @@ services:
     volumes:
       - ./backend:/app/backend
       - ./app/backend/node_modules:/app/backend/node_modules
+      - ./db:/app/db
     environment:
       NODE_ENV: production
