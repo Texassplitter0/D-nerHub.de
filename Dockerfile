@@ -16,6 +16,7 @@ COPY frontend/ ./
 # Setze das Arbeitsverzeichnis für die Datenbank
 WORKDIR /app/db
 COPY db/ ./
+RUN npm install
 
 # Exponiere den Port für den Backend-Server
 EXPOSE 10100
