@@ -24,4 +24,4 @@ EXPOSE 10100
 VOLUME [ "/app/backend/node_modules" ]
 
 # Definiere den Startbefehl für den Backend-Server
-CMD ["node", "db/server.js"]
+CMD ["node", "server.js"]
